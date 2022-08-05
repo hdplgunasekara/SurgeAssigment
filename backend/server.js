@@ -28,6 +28,14 @@ connection.once("open",()=>{
 });
 
 
+const userNoteRouter = require("./routes/note.routes.js");
+
+app.use("/usernote",userNoteRouter);
+
+
+
+
+
 
 
 
