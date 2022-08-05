@@ -29,8 +29,11 @@ connection.once("open",()=>{
 
 
 const userNoteRouter = require("./routes/note.routes.js");
+const userRouter = require("./routes/user.routes.js");
 
 app.use("/usernote",userNoteRouter);
+app.use("/user",userRouter);
+
 
 
 
