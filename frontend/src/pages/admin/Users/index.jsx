@@ -1,11 +1,11 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import  "./notes.styles.css";
+import  "./user.styles.css";
 import ReactPaginate from 'react-paginate';
 import { useState } from "react";
 import { useEffect } from "react";
 
-const Notes = () => {
+const User = () => {
     const [items,setItems]= useState([]);
     const [pageCount,setpageCount]= useState(0);
 
@@ -45,11 +45,11 @@ const Notes = () => {
     }
    
     return (
-        <div className="Notes">
+        <div className="User">
 
-        <center><h2>My Notes List</h2></center>
+        <center><h2>Users List</h2></center>
         
-        <div className="Notes-container">
+        <div className="User-container">
 
         <div className="Search-container">
         <nav class="navbar navbar-light bg-light">
@@ -61,7 +61,23 @@ const Notes = () => {
   </div>
 </nav>
 
+<nav class="navbar navbar-light bg-light">
+         <div class="container-fluid">
+          <form class="d-flex">
+       <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
+      <button class="btn btn-outline-success" type="submit">Search</button>
+    </form>
+  </div>
+</nav>
 
+<nav class="navbar navbar-light bg-light">
+         <div class="container-fluid">
+          <form class="d-flex">
+       <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
+      <button class="btn btn-outline-success" type="submit">Search</button>
+    </form>
+  </div>
+</nav>
 
         </div>
             <table class="table table-striped styled-table ">
@@ -119,4 +135,4 @@ const Notes = () => {
     )
 };
 
-export default Notes;
+export default User;
