@@ -1,11 +1,15 @@
 const mongoose = require('mongoose');
 const jsonwebtoken = require('jsonwebtoken');
 const  Schema = mongoose.Schema;
+const AutoIncrement = require('mongoose-sequence')(mongoose);
 
 const userSchema = new Schema({
+    _id: Number,
+
     firstname :{
         type : String,
         required : true
+        
     },
     lastname :{
         type : String,
@@ -41,6 +45,7 @@ const userSchema = new Schema({
 
 });
 
+userSchema.plugin(AutoIncrement);
 userSchema.methods.generateAuthToken = function(){
     const token = jsonwebtoken.sign({_id:this.id},process.env.JSONWTPRIVATEKEY,{expiresIn:"3d"})
     return token
