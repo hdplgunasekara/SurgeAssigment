@@ -55,7 +55,7 @@ const User = () => {
         <nav class="navbar navbar-light bg-light">
          <div class="container-fluid">
           <form class="d-flex">
-       <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
+       <input class="form-control me-2" type="search" placeholder="Search By ID" aria-label="Search"/>
       <button class="btn btn-outline-success" type="submit">Search</button>
     </form>
   </div>
@@ -64,7 +64,7 @@ const User = () => {
 <nav class="navbar navbar-light bg-light">
          <div class="container-fluid">
           <form class="d-flex">
-       <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
+       <input class="form-control me-2" type="search" placeholder="Search By Name" aria-label="Search"/>
       <button class="btn btn-outline-success" type="submit">Search</button>
     </form>
   </div>
@@ -73,7 +73,7 @@ const User = () => {
 <nav class="navbar navbar-light bg-light">
          <div class="container-fluid">
           <form class="d-flex">
-       <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
+       <input class="form-control me-2" type="search" placeholder="Search By Email" aria-label="Search"/>
       <button class="btn btn-outline-success" type="submit">Search</button>
     </form>
   </div>
@@ -83,9 +83,10 @@ const User = () => {
             <table class="table table-striped styled-table ">
                 <thead class="thead-dark" >
                     <tr>
-                        <th scope="col">No</th>
-                        <th scope="col">Title</th>
-                        <th scope="col">Description</th>                       
+                        <th scope="col">ID</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th> 
+                        <th scope="col">Mobile</th>                       
                         <th scope="col"><center>Actions</center></th>
                     </tr>
                 </thead>
@@ -97,11 +98,11 @@ const User = () => {
 
                             <td>{note.title}</td>
                             <td>{note.description}</td>
+                            <td>{note.description}</td>
                             <td className='action-buttons'>
                                 <center>
                                 <button  type="button" class="btn btn-success me-2">View</button>
-                                <button  type="button" class="btn btn-primary me-2">Update</button>
-                                <button  type="button" class="btn btn-danger me-2">Delete</button>
+                                
                                 </center>
                                </td>
                         </tr>

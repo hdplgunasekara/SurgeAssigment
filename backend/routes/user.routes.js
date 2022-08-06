@@ -1,6 +1,8 @@
 const router = require("express").Router();
 const { default: mongoose } = require("mongoose");
 let User = require("../models/user");
+var generator = require('generate-password');
+const sendEmail = require("../utils/sendmail");
 
 
 //register using email
@@ -8,10 +10,17 @@ router.post("/register", async (req, res) => {
     const email = req.body.email;
 	try {
 		
+		var password = generator.generate({
+			length: 10,
+			numbers: true
+		});
+
 		let user = await User.findOne({ email: email });
 		if (user){
 			return res.status(409).send({ message: "User with given email already Exist!" });
         }
+
+
 
         const newUser = new User({
         
@@ -21,19 +30,22 @@ router.post("/register", async (req, res) => {
           dateofbirth:"Undifiend",
           mobile:"Undifiend",
           status:false,
-          password:"Undifiend",
+          password:password,
           accounttype:"Student"
            
         })
 
 		// const salt = await bcrypt.genSalt(Number(process.env.SALT));
 		// const hashPassword = await bcrypt.hash(req.body.password, salt);
+       
+		const message=`This is your login link /n This is your temporary password-${password}`;
+	
 
-		newUser.save().then(()=>{
-            res.json("User  Added")
-        }).catch((err)=>{
-            console.log(err);
-        })
+		newUser.save();
+		await sendEmail(email, "Your Login Link With Password", message)
+		res
+		.status(201)
+		.send({ message: "An Email sent to user account with password" });
 
 		// const token = await new Token({
 		// 	userId: user._id,
@@ -53,6 +65,8 @@ router.post("/register", async (req, res) => {
 
 
 // Login authentication
+
+
 
 
 
