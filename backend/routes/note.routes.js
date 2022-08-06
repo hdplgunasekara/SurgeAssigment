@@ -27,27 +27,29 @@ router.route("/add").post((req,res)=>{
 
 //fetch notes start (with pagination)
 
-router.get("/notes", async (req, res ,next) => {
-	try {
+router.get("/notes", async (req, res) => {
+    const user = req.user;
+    res.json(user);
+	// try {
 		
-        let {page, size}=req.query
-        if(!page){
-            page=1;
-        }
-        if(!size){
-            size=1;
-        }
+    //     let {page, size}=req.query
+    //     if(!page){
+    //         page=1;
+    //     }
+    //     if(!size){
+    //         size=2;
+    //     }
         
-        const limit = parseInt(size);
-        const skip = (page-1)*size;
+    //     const limit = parseInt(size);
+    //     const skip = (page-1)*size;
 
-        const notes = await Note.find().limit(limit).skip(skip);
-        res.send(notes);
+    //     const notes = await Note.find().limit(limit).skip(skip);
+    //     res.send(notes);
 
 
-	} catch (error) {
-		res.sendStatus(500).send({ message: "Internal Server Error" });
-	}
+	// } catch (error) {
+	// 	res.sendStatus(500).send({ message: "Internal Server Error" });
+	// }
 });
 
 //fetch notes end

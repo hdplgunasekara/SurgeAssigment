@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const app = express();
+const auth = require('./middleware/auth.js');
 require("dotenv").config();
 
 const PORT = process.env.PORT || 8090;
@@ -31,7 +32,7 @@ connection.once("open",()=>{
 const userNoteRouter = require("./routes/note.routes.js");
 const userRouter = require("./routes/user.routes.js");
 
-app.use("/usernote",userNoteRouter);
+app.use("/usernote",auth,userNoteRouter);
 app.use("/user",userRouter);
 
 
