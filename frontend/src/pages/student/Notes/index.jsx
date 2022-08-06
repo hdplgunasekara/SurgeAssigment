@@ -4,10 +4,15 @@ import  "./notes.styles.css";
 import ReactPaginate from 'react-paginate';
 import { useState } from "react";
 import { useEffect } from "react";
+import Notemodal from '../../../components/models/NoteModel'
+import axios from 'axios';
+import swal from 'sweetalert'
 
 const Notes = () => {
     const [items,setItems]= useState([]);
     const [pageCount,setpageCount]= useState(0);
+
+   
 
     useEffect(()=>{
     const getNotes = async()=>{
@@ -43,6 +48,27 @@ const Notes = () => {
 
         setItems(notesFormServer);
     }
+
+    const noteDelete=(id)=>{
+       
+        axios.put(`http://127.0.0.1:8090/usernote/deletenote/${id}`).then(res=>{
+        swal({
+            title: "Success!",
+            text: "Note Deleted Successfully",
+            icon: 'warning',
+            timer: 2000,
+            button: false,
+          })
+          .then(function(){
+            window.location.reload();
+          })
+         
+        }
+        ).catch(err=>{
+           alert("Error")
+        });
+        
+      };
    
     return (
         <div className="Notes">
@@ -83,9 +109,9 @@ const Notes = () => {
                             <td>{note.description}</td>
                             <td className='action-buttons'>
                                 <center>
-                                <button  type="button" class="btn btn-success me-2">View</button>
-                                <button  type="button" class="btn btn-primary me-2">Update</button>
-                                <button  type="button" class="btn btn-danger me-2">Delete</button>
+                                <Notemodal id={note._id} title={note.title} description={note.description}  />
+                                {/* <button  type="button" class="btn btn-primary me-2">Update</button> */}
+                                <button  type="button" class="btn btn-danger me-2" onClick={() => { noteDelete(note._id) }}>Delete</button>
                                 </center>
                                </td>
                         </tr>
