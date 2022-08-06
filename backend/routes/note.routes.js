@@ -25,17 +25,32 @@ router.route("/add").post((req,res)=>{
     })
 })
 
+//fetch notes start (with pagination)
+
+router.get("/notes", async (req, res ,next) => {
+	try {
+		
+        let {page, size}=req.query
+        if(!page){
+            page=1;
+        }
+        if(!size){
+            size=1;
+        }
+        
+        const limit = parseInt(size);
+        const skip = (page-1)*size;
+
+        const notes = await Note.find().limit(limit).skip(skip);
+        res.send(notes);
 
 
-router.route("/").get((req,res)=>{
-    Note.find().then((note)=>{
-        res.json(note)
-    }).catch((err)=>{
-        console.log(err);
-    })
-}) 
+	} catch (error) {
+		res.sendStatus(500).send({ message: "Internal Server Error" });
+	}
+});
 
-
+//fetch notes end
 
 
 router.route("/update/:id").put(async(req,res)=>{
