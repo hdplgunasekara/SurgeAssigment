@@ -160,6 +160,41 @@ router.get("/users", async (req, res) => {
 //fetch user end
 
 
+//profile complete start
+
+router.put("/completeprofile/:id", async (req, res) => {
+    const Id = req.params.id
+ 
+    
+	try {
+  
+        const confirmPass= req.body.password==req.body.repassword;
+
+        if (!confirmPass) 
+        return res.status(401).send({ message: "Re Check Confirm Password" });
+       
+
+        const updateUser={
+            firstname:req.body.firstName,
+            lastname:req.body.lastName,
+            dateofbirth:req.body.dob,
+            mobile:req.body.mobile,
+            password:req.body.password
+            
+        }
+
+       
+         await User.findByIdAndUpdate(Id,updateUser).then(()=>{
+            res.status(200).send({status: "Successful"})
+        })
+		
+	} catch (error) {
+		res.status(500).send({ message: "Internal Server Errorr" });
+	}
+});
+
+//profile complete end
+
 
 
 

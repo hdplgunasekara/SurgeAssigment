@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import { useState } from "react";
 import { Link} from "react-router-dom";
 import  "./login.styles.css";
-import UserContext from "../../../context/UserContext";
 import axios from "axios";
 
 
@@ -30,19 +29,21 @@ const Login = () => {
       localStorage.setItem("refreshtoken", res.refreshtoken);
       localStorage.setItem("id", res.id);
       localStorage.setItem("email", res.email);
+      localStorage.setItem("status", res.status);
+      localStorage.setItem("permissionlevel", res.permissionlevel);
       
       if(!res.status){
-        window.location = "/adduser";
+        window.location = `/completeprofile/${res.id}`;
       }else{
       
       if(res.permissionlevel==='Student'){
         
-        window.location = "/notelist";
+        window.location = "student/notelist";
       }
 
       if(res.permissionlevel==='Admin'){
         
-        window.location = "/userlist";
+        window.location = "admin/userlist";
       }
     }
 

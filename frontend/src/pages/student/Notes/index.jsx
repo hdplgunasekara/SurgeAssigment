@@ -7,18 +7,20 @@ import { useEffect } from "react";
 import Notemodal from '../../../components/models/NoteModel'
 import axios from 'axios';
 import swal from 'sweetalert'
+import { LoadingOverlay } from '@mantine/core';
 
 const Notes = () => {
     const [items,setItems]= useState([]);
     const [pageCount,setpageCount]= useState(0);
-
-   
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(()=>{
     const getNotes = async()=>{
+    setIsLoading(true);
     const res= await fetch(
         'http://127.0.0.1:8090/usernote/notes'
     );
+    setIsLoading(false);
     const data = await res.json();
     const total = res.headers.get('x-total-count');
     setpageCount(total+2);
@@ -71,6 +73,7 @@ const Notes = () => {
       };
    
     return (
+
         <div className="Notes">
 
         <center><h2>My Notes List</h2></center>
