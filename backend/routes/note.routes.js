@@ -1,11 +1,12 @@
 const router = require("express").Router();
 const { default: mongoose } = require("mongoose");
 let Note = require("../models/note");
+const auth = require('../middleware/auth.js');
 
 router.route("/add").post((req,res)=>{
     const title = req.body.title;
     const description = req.body.description;
-    const userid = req.body.userid;
+    const userid ="aa";
     
    
 
@@ -36,7 +37,7 @@ router.get("/notes", async (req, res) => {
             page=1;
         }
         if(!size){
-            size=2;
+            size=5;
         }
         
         const limit = parseInt(size);

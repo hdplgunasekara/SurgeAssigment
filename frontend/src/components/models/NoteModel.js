@@ -34,24 +34,13 @@ export default function NoteModal(props) {
    
     axios.put(`http://127.0.0.1:8090/usernote/update/${id}`,{title:title,description:description})
         .then((res) => setShow(false),
-        alert("Updated succussful")
+        alert("Updated succussful"),
         
         ).catch(err => console.log(err))
         
 };
 
-const setDelete=(id)=>{
-       
-  axios.put(`http://localhost:8090/supplier/setdeletesuppierq/${id}`).then((res)=>{
-  alert("Supplier Deleted").catch(err=>{
-     alert("Error")
-  });
-  });
 
-  
-
-
-};
  
   return (
     <>
