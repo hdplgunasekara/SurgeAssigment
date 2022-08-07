@@ -7,15 +7,16 @@ import Notes from "./pages/student/Notes";
 import Users from "./pages/admin/Users";
 import AddUser from "./pages/admin/AddUser";
 import AddNote from "./pages/student/AddNote";
+import Nav from "./components/NavBar"
 
 function App() {
   return (
     <div className="App">
+  <Nav/>
      <BrowserRouter>
       <Routes>
         <Route path="/login" element={<Login />} />
-        <Route path="/" element={<NavBar />} />
-        <Route path="/notes" element={<Notes />} />
+        <Route path="/notelist" element={<Notes />} />
         <Route path="/userlist" element={<Users />} />
         <Route path="/adduser" element={<AddUser />} />
         <Route path="/addnote" element={<AddNote />} />

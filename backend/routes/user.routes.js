@@ -70,16 +70,50 @@ router.post("/register", async (req, res) => {
 // Login authentication
 
 
-router.post('/login',(req,res)=>{
-   //DB
-   //OK
-   const username= req.body.username;
-   const user= {name:username};
+router.post('/login', async (req,res)=>{
+    const email= req.body.email;
+    const password = req.body.password;
 
-   const accessToken=jwt.sign(user,process.env.TOKEN_KEY,{expiresIn: '1h'});
-   const refreshToken= jwt.sign(user,process.env.RE_TOKEN_KEY,{expiresIn: '24h'});
-   refreshTokens.push(refreshToken);
-   res.send({accessToken,refreshToken});
+   try {
+    const user = await User.findOne({ email: email });
+    if (!user)
+        return res.status(401).send({ message: "Invalid Email" });
+
+    // const validPassword = await bcrypt.compare(
+    //     req.body.password,
+    //     user.password
+    // );
+    const validPassword = user.password==password;
+    if (!validPassword)
+        return res.status(401).send({ message: "Incorrect Password Password" });
+
+
+     const tokendetails= {email:user.email,type:user.accounttype,status:user.status};
+     const accessToken=jwt.sign(tokendetails,process.env.TOKEN_KEY,{expiresIn: '1d'});
+     const refreshToken= jwt.sign(tokendetails,process.env.RE_TOKEN_KEY,{expiresIn: '2d'});
+     refreshTokens.push(refreshToken);
+
+     const data = {
+        id: user._id,
+        email: user.email,
+        accesstoken: accessToken,
+        refreshtoken: refreshToken,
+        permissionlevel: user.accounttype,
+        status:user.status
+    };
+
+     res.send(data);
+
+
+   } catch (error) {
+
+    res.status(500).send({ message: "Internal Server Errorr" });
+    
+   }
+  
+  
+
+   
    
 })
 
