@@ -5,7 +5,8 @@ import Login from "./pages/main/Login";
 import NavBar from "./components/NavBar";
 import Notes from "./pages/student/Notes";
 import Users from "./pages/admin/Users";
-import AddUsers from "./pages/admin/AddUser";
+import AddUser from "./pages/admin/AddUser";
+import AddNote from "./pages/student/AddNote";
 
 function App() {
   return (
@@ -16,7 +17,8 @@ function App() {
         <Route path="/" element={<NavBar />} />
         <Route path="/notes" element={<Notes />} />
         <Route path="/userlist" element={<Users />} />
-        <Route path="/adduser" element={<AddUsers />} />
+        <Route path="/adduser" element={<AddUser />} />
+        <Route path="/addnote" element={<AddNote />} />
       </Routes>
     </BrowserRouter>
     </div>

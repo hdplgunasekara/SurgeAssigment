@@ -96,6 +96,35 @@ router.post('/token',(req,res)=>{
 });
 
 
+//fetch users start (with pagination)
+
+router.get("/users", async (req, res) => {
+
+	try {
+		
+        let {page, size}=req.query
+        if(!page){
+            page=1;
+        }
+        if(!size){
+            size=5;
+        }
+        
+        const limit = parseInt(size);
+        const skip = (page-1)*size;
+
+        const users = await User.find().limit(limit).skip(skip);
+       
+        res.send(users);
+
+
+	} catch (error) {
+		res.sendStatus(500).send({ message: "Internal Server Error" });
+	}
+});
+
+//fetch user end
+
 
 
 

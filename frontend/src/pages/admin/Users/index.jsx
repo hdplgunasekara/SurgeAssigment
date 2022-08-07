@@ -4,31 +4,32 @@ import  "./user.styles.css";
 import ReactPaginate from 'react-paginate';
 import { useState } from "react";
 import { useEffect } from "react";
+import Usermodal from '../../../components/models/UserModel'
 
 const User = () => {
     const [items,setItems]= useState([]);
     const [pageCount,setpageCount]= useState(0);
 
     useEffect(()=>{
-    const getNotes = async()=>{
+    const getUsers = async()=>{
     const res= await fetch(
-        'http://127.0.0.1:8090/usernote/notes'
+        'http://127.0.0.1:8090/user/users'
     );
     const data = await res.json();
-    const total = res.headers.get('x-total-count');
-    setpageCount(total+2);
+    // const total = res.headers.get('x-total-count');
+    setpageCount(10);
 
     setItems(data);
     };
 
-    getNotes();
+    getUsers();
 
 
     },[]);
 
-    const fetchNotes = async  (currentPage)=>{
+    const fetchUsers = async  (currentPage)=>{
         const res = await fetch(
-            `http://127.0.0.1:8090/usernote/notes?page=${currentPage}&limit=1`
+            `http://127.0.0.1:8090/user/users?page=${currentPage}&limit=1`
         );
         const data = await res.json();
         return data;
@@ -39,9 +40,9 @@ const User = () => {
 
         let currentPage = data.selected+1;
 
-        const notesFormServer = await fetchNotes(currentPage);
+        const userFormServer = await fetchUsers(currentPage);
 
-        setItems(notesFormServer);
+        setItems(userFormServer);
     }
    
     return (
@@ -92,17 +93,16 @@ const User = () => {
                 </thead>
                 <tbody>
 
-                    {items.map(note => <tr key={note._id}>
+                    {items.map(user => <tr key={user._id}>
 
-                         <th scope="row">11</th>
+                         <th scope="row">{user._id}</th>
 
-                            <td>{note.title}</td>
-                            <td>{note.description}</td>
-                            <td>{note.description}</td>
+                            <td>{user.firstname}</td>
+                            <td>{user.email}</td>
+                            <td>{user.mobile}</td>
                             <td className='action-buttons'>
                                 <center>
-                                <button  type="button" class="btn btn-success me-2">View</button>
-                                
+                                <Usermodal id={user._id} fname={user.firstname} lname={user.lastname} email={user.email} mobile={user.mobile} />
                                 </center>
                                </td>
                         </tr>
