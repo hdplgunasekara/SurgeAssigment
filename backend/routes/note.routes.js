@@ -3,7 +3,7 @@ const { default: mongoose } = require("mongoose");
 let Note = require("../models/note");
 const auth = require('../middleware/auth.js');
 
-router.route("/add").post((req,res)=>{
+router.route("/add").post(auth,(req,res)=>{
     const title = req.body.title;
     const description = req.body.description;
     const userid ="aa";

@@ -3,6 +3,7 @@ import { useState } from "react";
 import  "./noteadd.styles.css";
 import axios from 'axios';
 import swal  from "sweetalert";
+import requestConfigJson from "../../../context/ConfigJson";
 
 
 const AddNote = () => {
@@ -26,7 +27,7 @@ const AddNote = () => {
 		e.preventDefault();
 		try {
 			const url = "http://localhost:8090/usernote/add";
-			const { data: res } = await axios.post(url, {title:title,description:description}).then(()=>{
+			const { data: res } = await axios.post(url, {title:title,description:description},requestConfigJson).then(()=>{
             alert("Added Successful");
             window.location.reload();
         

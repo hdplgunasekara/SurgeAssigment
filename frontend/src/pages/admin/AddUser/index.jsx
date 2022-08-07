@@ -3,7 +3,7 @@ import { useState } from "react";
 import axios from "axios";
 import { Link} from "react-router-dom";
 import  "./adduser.styles.css";
-
+import requestConfigJson from "../../../context/ConfigJson";
 
 
 const AddUser = () => {
@@ -23,7 +23,7 @@ const AddUser = () => {
 		e.preventDefault();
 		try {
 			const url = "http://127.0.0.1:8090/user/register";
-			const { data: res } = await axios.post(url,{email:email});
+			const { data: res } = await axios.post(url,{email:email},requestConfigJson);
       setError("");
 			setMsg(res.message);
       setEmail("");
