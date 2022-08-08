@@ -34,10 +34,12 @@ const Notes = () => {
     },[]);
 
     const fetchNotes = async  (currentPage)=>{
+        setIsLoading(true);
         const res = await fetch(
             `http://127.0.0.1:8090/usernote/notes?page=${currentPage}&limit=1`
         );
         const data = await res.json();
+        setIsLoading(false);
         return data;
 
     };
@@ -75,6 +77,10 @@ const Notes = () => {
     return (
 
         <div className="Notes">
+
+   
+        <LoadingOverlay visible={isLoading} overlayBlur={2} />
+       
 
         <center><h2>My Notes List</h2></center>
         

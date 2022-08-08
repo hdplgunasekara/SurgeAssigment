@@ -6,7 +6,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 const Navbar = () => {
 
-
+console.log(localStorage.getItem("accesstoken") && localStorage.getItem("status"));
 
   const logout = () => {
     localStorage.removeItem("accesstoken");
@@ -31,8 +31,8 @@ const Navbar = () => {
     <div class="collapse navbar-collapse" id="mynavbar">
       <ul class="navbar-nav me-auto">
 
-        {/* Student Menu */}
-					{localStorage.getItem("permissionlevel") == "Admin" && localStorage.getItem("status")? (
+        {/* Admin Menu */}
+					{localStorage.getItem("permissionlevel") === "Admin" && localStorage.getItem("status")==='true'? (
 					<>
         <li class="nav-item">
           <a class="nav-link" href="/admin/adduser">Add User</a>
@@ -46,8 +46,8 @@ const Navbar = () => {
 						<li></li>
 					)}
 
-          {/* Admin Menu */}
-					{localStorage.getItem("permissionlevel") === "Student" && localStorage.getItem("status")? (
+          {/* Student Menu */}
+					{localStorage.getItem("permissionlevel") === "Student" && localStorage.getItem("status")==='true'? (
 					<>
        <li class="nav-item">
           <a class="nav-link" href="/student/addnote">Add Note</a>
@@ -64,7 +64,7 @@ const Navbar = () => {
 
         </ul>
 
-        {localStorage.getItem("accesstoken") && localStorage.getItem("status")? (
+        {localStorage.getItem("accesstoken") && localStorage.getItem("status")==='true'? (
 					<form class="d-flex">     
           <button class="btn btn-primary" type="button" onClick={logout} >Logout</button>
            </form>
