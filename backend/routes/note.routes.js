@@ -1,30 +1,42 @@
 const router = require("express").Router();
 const { default: mongoose } = require("mongoose");
-let Note = require("../models/note");
+let {Note,validateNote} = require("../models/note");
 const auth = require('../middleware/auth.js');
 
-router.route("/add").post(auth,(req,res)=>{
+//add notes start 
+
+router.post("/add/:userid", async (req, res) => {
     const title = req.body.title;
     const description = req.body.description;
-    const userid ="aa";
-    
-   
+    const userid =req.params.userid;
+	try {
 
-    const newNote = new Note({
-        
-       
-        title,
-        description,
-        userid,
-        status:"Active"
-    })
+        const { error } = validateNote(req.body);
+		if (error)
+			return res.status(400).send({ message: error.details[0].message });
 
-    newNote.save().then(()=>{
-        res.json("Note Added")
-    }).catch((err)=>{
-        console.log(err);
-    })
-})
+
+            const newNote = new Note({
+               
+                title,
+                description,
+                userid:userid,
+                status:"Active"
+            })
+
+		newNote.save()
+		
+		res
+		.status(201)
+		.send({ message: "Added Successfull" });
+	} catch (error) {
+		
+		res.status(500).send({ message: "Server Error" });
+	}
+});
+
+//add notes end
+
 
 //fetch notes start (with pagination)
 
@@ -32,7 +44,7 @@ router.get("/notes", async (req, res) => {
 
 	try {
 		
-        let {page, size}=req.query
+        let {userid ,page, size}=req.query
         if(!page){
             page=1;
         }
@@ -43,7 +55,7 @@ router.get("/notes", async (req, res) => {
         const limit = parseInt(size);
         const skip = (page-1)*size;
 
-        const notes = await Note.find({status : 'Active'}).limit(limit).skip(skip);
+        const notes = await Note.find({status : 'Active', userid:userid}).limit(limit).skip(skip);
        
         res.send(notes);
 

@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const { default: mongoose } = require("mongoose");
-let User = require("../models/user");
+let {User,validateEmail,validateAll} = require("../models/user");
 var generator = require('generate-password');
 const sendEmail = require("../utils/sendmail");
 const jwt =require('jsonwebtoken');
@@ -13,6 +13,10 @@ let refreshTokens=[];
 router.post("/register", async (req, res) => {
     const email = req.body.email;
 	try {
+
+        const { error } = validateEmail(req.body);
+		if (error)
+			return res.status(400).send({ message: error.details[0].message });
 		
 		var password = generator.generate({
 			length: 10,
@@ -50,9 +54,8 @@ router.post("/register", async (req, res) => {
 		res
 		.status(201)
 		.send({ message: "An Email sent to user account with password" });
-        
 	} catch (error) {
-		console.log(error);
+		
 		res.status(500).send({ message: "Server Error" });
 	}
 });
@@ -70,13 +73,13 @@ router.post('/login', async (req,res)=>{
     if (!user)
         return res.status(401).send({ message: "Invalid Email" });
 
-    // const validPassword = await bcrypt.compare(
-    //     req.body.password,
-    //     user.password
-    // );
-    const validPassword = user.password==password;
+    const validPassword = await bcrypt.compare(
+        req.body.password,
+        user.password
+    );
+
     if (!validPassword)
-        return res.status(401).send({ message: "Incorrect Password Password" });
+        return res.status(401).send({ message: "Incorrect Password " });
 
 
      const tokendetails= {email:user.email,type:user.accounttype,status:user.status};
@@ -155,14 +158,20 @@ router.get("/users", async (req, res) => {
 
 router.put("/completeprofile/:id", async (req, res) => {
     const Id = req.params.id
- 
     
 	try {
-  
-        const confirmPass= req.body.password==req.body.repassword;
 
-        if (!confirmPass) 
-        return res.status(401).send({ message: "Re Check Confirm Password" });
+  
+        const { error } = validateAll(req.body);
+     
+		if (error)
+			return res.status(400).send({ message: error.details[0].message });
+
+        if(req.body.password!=req.body.repassword)
+            return res.status(400).send({ message: "Password and Confirm password must be match" });
+
+        const salt = await bcrypt.genSalt(Number(process.env.SALT));
+		const hashPassword = await bcrypt.hash(req.body.password, salt);
        
 
         const updateUser={
@@ -170,17 +179,19 @@ router.put("/completeprofile/:id", async (req, res) => {
             lastname:req.body.lastName,
             dateofbirth:req.body.dob,
             mobile:req.body.mobile,
-            password:req.body.password
+            password:hashPassword,
+            status:true
             
         }
 
+        
        
          await User.findByIdAndUpdate(Id,updateUser).then(()=>{
             res.status(200).send({status: "Successful"})
         })
 		
 	} catch (error) {
-		res.status(500).send({ message: "Internal Server Errorr" });
+		res.status(500).send({ message: "Internal Server Error"});
 	}
 });
 
