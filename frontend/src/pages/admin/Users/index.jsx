@@ -12,15 +12,18 @@ const User = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [items,setItems]= useState([]);
     const [pageCount,setpageCount]= useState(0);
+    const [search,setSearch]= useState("");
+    
+
 
     useEffect(()=>{
+
     setIsLoading(true)
     const getUsers = async()=>{
     const res= await fetch(
         'http://127.0.0.1:8090/user/users'
     );
     const data = await res.json();
-    // const total = res.headers.get('x-total-count');
     setpageCount(10);
 
     setItems(data);
@@ -33,9 +36,10 @@ const User = () => {
     },[]);
 
     const fetchUsers = async  (currentPage)=>{
+        
         setIsLoading(true)
         const res = await fetch(
-            `http://127.0.0.1:8090/user/users?page=${currentPage}&limit=1`
+            `http://127.0.0.1:8090/user/users?page=${currentPage}&limit=1&search=${search}`
         );
         const data = await res.json();
         setIsLoading(false)
@@ -44,6 +48,7 @@ const User = () => {
     };
 
     const handlePageClick = async (data)=>{
+        
 
         let currentPage = data.selected+1;
 
@@ -51,7 +56,18 @@ const User = () => {
 
         setItems(userFormServer);
     }
+
+    const handleChangeSearch = async (event) => {
+        setSearch(event.target.value);  
+        const userFormServer = await fetchUsers(1);
+        setItems(userFormServer);
+
+      
+      }
+
    
+   
+    
     return (
         <div className="User">
         <LoadingOverlay visible={isLoading} overlayBlur={2} />
@@ -60,56 +76,45 @@ const User = () => {
         <div className="User-container">
 
         <div className="Search-container">
-        <nav class="navbar navbar-light bg-light">
-         <div class="container-fluid">
-          <form class="d-flex">
-       <input class="form-control me-2" type="search" placeholder="Search By ID" aria-label="Search"/>
-      <button class="btn btn-outline-success" type="submit">Search</button>
+        <nav className="navbar navbar-light bg-light">
+         <div className="container-fluid">
+          <form className="d-flex" >
+       <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search"
+       onChange={handleChangeSearch}
+       required/>
     </form>
   </div>
 </nav>
+      </div>
 
-<nav class="navbar navbar-light bg-light">
-         <div class="container-fluid">
-          <form class="d-flex">
-       <input class="form-control me-2" type="search" placeholder="Search By Name" aria-label="Search"/>
-      <button class="btn btn-outline-success" type="submit">Search</button>
-    </form>
-  </div>
-</nav>
-
-<nav class="navbar navbar-light bg-light">
-         <div class="container-fluid">
-          <form class="d-flex">
-       <input class="form-control me-2" type="search" placeholder="Search By Email" aria-label="Search"/>
-      <button class="btn btn-outline-success" type="submit">Search</button>
-    </form>
-  </div>
-</nav>
-
-        </div>
-            <table class="table table-striped styled-table ">
-                <thead class="thead-dark" >
+          {items!=""? (
+        <table className="table table-striped styled-table ">
+                <thead className="thead-dark" >
                     <tr>
                         <th scope="col">ID</th>
-                        <th scope="col">Name</th>
+                        <th scope="col">First Name</th>
+                        <th scope="col">Last Name</th>
                         <th scope="col">Email</th> 
                         <th scope="col">Mobile</th>                       
                         <th scope="col"><center>Actions</center></th>
                     </tr>
                 </thead>
                 <tbody>
+                    {items==null && 
+                    <h2>No Result Found</h2>
+                    }
 
                     {items.map(user => <tr key={user._id}>
 
                          <th scope="row">{user._id}</th>
 
                             <td>{user.firstname}</td>
+                            <td>{user.lastname}</td>
                             <td>{user.email}</td>
                             <td>{user.mobile}</td>
                             <td className='action-buttons'>
                                 <center>
-                                <Usermodal id={user._id} fname={user.firstname} lname={user.lastname} email={user.email} mobile={user.mobile} />
+                                <Usermodal id={user._id} fname={user.firstname} lname={user.lastname} email={user.email} mobile={user.mobile} dob={user.dateofbirth} />
                                 </center>
                                </td>
                         </tr>
@@ -120,6 +125,13 @@ const User = () => {
 
                 </tbody>
             </table>
+            	
+				) : (
+                    <div class="alert alert-warning" role="alert">
+                    No Result Found!!
+                    </div>
+          				
+			)}
            </div>
            <ReactPaginate
            breakLabel={'...'}

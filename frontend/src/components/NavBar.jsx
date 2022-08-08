@@ -6,7 +6,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 const Navbar = () => {
 
-console.log(localStorage.getItem("accesstoken") && localStorage.getItem("status"));
+
 
   const logout = () => {
     localStorage.removeItem("accesstoken");

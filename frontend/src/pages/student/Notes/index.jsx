@@ -22,8 +22,7 @@ const Notes = () => {
     );
     setIsLoading(false);
     const data = await res.json();
-    const total = res.headers.get('x-total-count');
-    setpageCount(total+2);
+    setpageCount(10);
 
     setItems(data);
     };
@@ -77,32 +76,16 @@ const Notes = () => {
     return (
 
         <div className="Notes">
-
    
-        <LoadingOverlay visible={isLoading} overlayBlur={2} />
-       
+        <LoadingOverlay visible={isLoading} overlayBlur={2} />      
 
         <center><h2>My Notes List</h2></center>
         
         <div className="Notes-container">
-
-        <div className="Search-container">
-        <nav class="navbar navbar-light bg-light">
-         <div class="container-fluid">
-          <form class="d-flex">
-       <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
-      <button class="btn btn-outline-success" type="submit">Search</button>
-    </form>
-  </div>
-</nav>
-
-
-
-        </div>
             <table class="table table-striped styled-table ">
                 <thead class="thead-dark" >
                     <tr>
-                        <th scope="col">No</th>
+                        
                         <th scope="col">Title</th>
                         <th scope="col">Description</th>                       
                         <th scope="col"><center>Actions</center></th>
@@ -111,23 +94,16 @@ const Notes = () => {
                 <tbody>
 
                     {items.map(note => <tr key={note._id}>
-
-                         <th scope="row">11</th>
-
-                            <td>{note.title}</td>
+                       <td>{note.title}</td>
                             <td>{note.description}</td>
                             <td className='action-buttons'>
                                 <center>
                                 <Notemodal id={note._id} title={note.title} description={note.description}  />
-                                {/* <button  type="button" class="btn btn-primary me-2">Update</button> */}
                                 <button  type="button" class="btn btn-danger me-2" onClick={() => { noteDelete(note._id) }}>Delete</button>
                                 </center>
                                </td>
                         </tr>
-                    )}
-                        
-                        
-                      
+                    )}                   
 
                 </tbody>
             </table>

@@ -32,13 +32,12 @@ const validateNote= (data) => {
 	const schema = Joi.object({
         title: Joi.string()
         .label("Title") 
-        .alphanum()
         .min(10)
         .required(),
     
      description: Joi.string()
        .label("Description")
-        .alphanum()
+
         .min(20)
         .required(),
 		
