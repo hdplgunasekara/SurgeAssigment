@@ -4,6 +4,7 @@ let User = require("../models/user");
 var generator = require('generate-password');
 const sendEmail = require("../utils/sendmail");
 const jwt =require('jsonwebtoken');
+const bcrypt = require("bcrypt");
 require("dotenv").config();
 
 let refreshTokens=[]; 
@@ -23,43 +24,33 @@ router.post("/register", async (req, res) => {
 			return res.status(409).send({ message: "User with given email already Exist!" });
         }
 
-
+       
+	    const message=`This is your login link /n This is your temporary password-${password}`;
+	    
+        await sendEmail(email, "Your Login Link With Password", message)
+        
+        const salt = await bcrypt.genSalt(Number(process.env.SALT));
+		const hashPassword = await bcrypt.hash(password, salt);
 
         const newUser = new User({
         
-          firstname:"Undifiend",
-          lastname:"Undifiend",
-          email:email,
-          dateofbirth:"Undifiend",
-          mobile:"Undifiend",
-          status:false,
-          password:password,
-          accounttype:"Student"
-           
-        })
+            firstname:"Undifiend",
+            lastname:"Undifiend",
+            email:email,
+            dateofbirth:"Undifiend",
+            mobile:"Undifiend",
+            status:false,
+            password:hashPassword,
+            accounttype:"Student"
+             
+          })
 
-		// const salt = await bcrypt.genSalt(Number(process.env.SALT));
-		// const hashPassword = await bcrypt.hash(req.body.password, salt);
-       
-		const message=`This is your login link /n This is your temporary password-${password}`;
-	
-
-		newUser.save();
-		await sendEmail(email, "Your Login Link With Password", message)
+		newUser.save()
+		
 		res
 		.status(201)
 		.send({ message: "An Email sent to user account with password" });
-
-		// const token = await new Token({
-		// 	userId: user._id,
-		// 	token: crypto.randomBytes(32).toString("hex"),
-		// }).save();
-		// const url = `${process.env.BASE_URL}users/${user.id}/verify/${token.token}`;
-		// await sendEmail(user.email, "Verify Email", url);
-
-		// res
-		// 	.status(201)
-		// 	.send({ message: "An Email sent to your account please verify" });
+        
 	} catch (error) {
 		console.log(error);
 		res.status(500).send({ message: "Server Error" });
