@@ -118,7 +118,7 @@ router.post('/token',(req,res)=>{
    if(!refreshTokens.includes(refreshToken)) res.sendStatus(403);
    jwt.verify(refreshToken,process.env.RE_TOKEN_KEY,(err,user)=>{
       if(err) res.sendStatus(403);
-      const accessToken=jwt.sign({name:user.name},process.env.TOKEN_KEY,{expiresIn: '10s'});
+      const accessToken=jwt.sign({name:user.name},process.env.TOKEN_KEY,{expiresIn: '1s'});
       res.send({accessToken});
    });
 });
@@ -130,7 +130,8 @@ router.get("/users", async (req, res) => {
 
 	try {
 		
-        let {page, size}=req.query
+        let {page, size ,search}=req.query       
+
         if(!page){
             page=1;
         }
@@ -141,9 +142,20 @@ router.get("/users", async (req, res) => {
         const limit = parseInt(size);
         const skip = (page-1)*size;
 
-        const users = await User.find().limit(limit).skip(skip);
-       
-        res.send(users);
+        if(search==null||search===""){
+
+            const users = await User.find().limit(limit).skip(skip);      
+            res.send(users);
+            
+        }else{
+            
+            const users = await User.find({
+            $or: [{ firstname: { $regex: search, $options: "i" }},{lastname: { $regex: search, $options: "i" }},{email: { $regex: search, $options: "i" }}],
+            }).limit(limit).skip(skip);      
+            res.send(users);
+        }
+
+     
 
 
 	} catch (error) {
