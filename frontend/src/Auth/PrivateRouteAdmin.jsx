@@ -3,8 +3,8 @@ import { Navigate, Outlet } from "react-router-dom";
 
 const PrivateRouteAdmin = (  ) => {
 	const isAuthenticated = localStorage.getItem("accesstoken") !== null;
-	const isAccess = localStorage.getItem("permissionlevel") == 'Admin';
-	const Status =  localStorage.getItem("permissionlevel");
+	const isAccess = localStorage.getItem("permissionlevel") === 'Admin';
+	const Status =  localStorage.getItem("status")==='true';
 
 
 	if (isAuthenticated && isAccess && Status) {

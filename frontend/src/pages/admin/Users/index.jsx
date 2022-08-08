@@ -6,12 +6,15 @@ import { useState } from "react";
 import { useEffect } from "react";
 import Usermodal from '../../../components/models/UserModel'
 import requestConfigJson from "../../../context/ConfigJson";
+import { LoadingOverlay } from '@mantine/core';
 
 const User = () => {
+    const [isLoading, setIsLoading] = useState(false);
     const [items,setItems]= useState([]);
     const [pageCount,setpageCount]= useState(0);
 
     useEffect(()=>{
+    setIsLoading(true)
     const getUsers = async()=>{
     const res= await fetch(
         'http://127.0.0.1:8090/user/users'
@@ -21,18 +24,21 @@ const User = () => {
     setpageCount(10);
 
     setItems(data);
+   
     };
 
     getUsers();
-
+    setIsLoading(false)
 
     },[]);
 
     const fetchUsers = async  (currentPage)=>{
+        setIsLoading(true)
         const res = await fetch(
             `http://127.0.0.1:8090/user/users?page=${currentPage}&limit=1`
         );
         const data = await res.json();
+        setIsLoading(false)
         return data;
 
     };
@@ -48,7 +54,7 @@ const User = () => {
    
     return (
         <div className="User">
-
+        <LoadingOverlay visible={isLoading} overlayBlur={2} />
         <center><h2>Users List</h2></center>
         
         <div className="User-container">

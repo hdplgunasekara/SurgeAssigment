@@ -3,9 +3,8 @@ import { Navigate, Outlet } from "react-router-dom";
 
 const PrivateRouteMain = (  ) => {
 	const isAuthenticated = localStorage.getItem("accesstoken") !== null;
-	const Status =  !(localStorage.getItem("permissionlevel"));
+	const Status =  localStorage.getItem("status") !== 'true';
 
-    console.log(Status);
 
 	if (isAuthenticated && Status) {
 		return <Outlet />;

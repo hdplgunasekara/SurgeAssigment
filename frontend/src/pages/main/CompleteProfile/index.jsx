@@ -3,11 +3,12 @@ import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import  "./completep.styles.css";
 import swal from "sweetalert";
-
+import { LoadingOverlay } from '@mantine/core';
 import axios from "axios";
 
 
 const CompleteProfile = () => {
+const [isLoading, setIsLoading] = useState(false);
 const param = useParams();
 const [data, setData] = useState({
     firstName: "",
@@ -26,8 +27,10 @@ const handleChange = ({ currentTarget: input }) => {
 	};
 
     const handleSubmit = async (e) => {
+      
 		e.preventDefault();
 		try {
+      setIsLoading(true);
 			const url = `http://localhost:8090/user/completeprofile/${param.id}`;
 			 await axios.put(url, data).then(res=>{
                 swal({
@@ -38,10 +41,12 @@ const handleChange = ({ currentTarget: input }) => {
                     button: false,
                   })
                   .then(function(){
+                    setIsLoading(false);
                     window.location.href='/login';
                   })
                  
                 }
+      
                 )
 			
 		} catch (error) {
@@ -50,6 +55,7 @@ const handleChange = ({ currentTarget: input }) => {
 				error.response.status >= 400 &&
 				error.response.status <= 500
 			) {
+        setIsLoading(false)
 				setError(error.response.data.message);
 			}
 		}
@@ -59,6 +65,7 @@ const handleChange = ({ currentTarget: input }) => {
     return (
 
       <div className="Auth-form-container">
+        <LoadingOverlay visible={isLoading} overlayBlur={2} />
         <form className="Auth-form" onSubmit={handleSubmit}>
           <div className="Auth-form-content">
             <h3 className="Auth-form-title">Complete Your Profile</h3>

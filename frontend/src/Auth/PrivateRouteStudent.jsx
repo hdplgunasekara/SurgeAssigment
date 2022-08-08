@@ -3,9 +3,10 @@ import { Navigate, Outlet } from "react-router-dom";
 
 const PrivateRouteStudent = (  ) => {
 	const isAuthenticated = localStorage.getItem("accesstoken") !== null;
-	const isAccess = localStorage.getItem("permissionlevel") == 'Student';
-	const Status =  localStorage.getItem("permissionlevel") ;
-
+	const isAccess = localStorage.getItem("permissionlevel") === 'Student';
+	const Status =  localStorage.getItem("status")==='true';
+     
+	console.log(isAuthenticated && isAccess && Status);
 
 	if (isAuthenticated && isAccess && Status) {
 		return <Outlet />;

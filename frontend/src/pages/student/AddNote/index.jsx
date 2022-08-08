@@ -4,6 +4,7 @@ import  "./noteadd.styles.css";
 import axios from 'axios';
 import swal  from "sweetalert";
 import requestConfigJson from "../../../context/ConfigJson";
+import { LoadingOverlay } from '@mantine/core';
 
 
 const AddNote = () => {
@@ -11,6 +12,7 @@ const AddNote = () => {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [error, setError] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
 	
 
     const handleChangeTitle = (event) => {
@@ -26,22 +28,27 @@ const AddNote = () => {
       const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
+      setIsLoading(true);
 			const url = "http://localhost:8090/usernote/add";
 			const { data: res } = await axios.post(url, {title:title,description:description},requestConfigJson).then(()=>{
-            alert("Added Successful");
+            alert("Added Successful");      
             window.location.reload();
+            setIsLoading(false);
         
             })			
 		} catch (error) {
 			if(error.response){
 			setError("Error! Please Try Again");
+      setIsLoading(false);
             }
+
 			
 		}
 	};
    
     return (
   <div className="Addnote"> 
+    <LoadingOverlay visible={isLoading} overlayBlur={2} />
       <div className="Note-form-container">
         <form className="Note-form" method="POST" onSubmit={handleSubmit}>
           <div className="Note-form-content">

@@ -3,11 +3,13 @@ import { useState } from "react";
 import { Link} from "react-router-dom";
 import  "./login.styles.css";
 import axios from "axios";
+import { LoadingOverlay } from '@mantine/core';
 
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   
   const handleChangeEmail = (event) => {
@@ -23,6 +25,7 @@ const Login = () => {
   const handleLogin = async (e) => {
 		e.preventDefault();
 		try {
+      setIsLoading(true);
 			const url = "http://localhost:8090/user/login";
 			const { data: res } = await axios.post(url, {email:email,password:password});
 			localStorage.setItem("accesstoken", res.accesstoken);
@@ -32,6 +35,7 @@ const Login = () => {
       localStorage.setItem("status", res.status);
       localStorage.setItem("permissionlevel", res.permissionlevel);
       
+      setIsLoading(false);
       if(!res.status){
         window.location = `/completeprofile/${res.id}`;
       }else{
@@ -53,6 +57,7 @@ const Login = () => {
 				error.response.status >= 400 &&
 				error.response.status <= 500
 			) {
+        setIsLoading(false);
 				alert(error.response.data.message);
 			}
 		}
@@ -62,6 +67,7 @@ const Login = () => {
     return (
 
       <div className="Auth-form-container">
+         <LoadingOverlay visible={isLoading} overlayBlur={2} />
         <form className="Auth-form" onSubmit={handleLogin}>
           <div className="Auth-form-content">
             <h3 className="Auth-form-title">Sign In</h3>

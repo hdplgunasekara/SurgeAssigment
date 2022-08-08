@@ -4,10 +4,11 @@ import axios from "axios";
 import { Link} from "react-router-dom";
 import  "./adduser.styles.css";
 import requestConfigJson from "../../../context/ConfigJson";
+import { LoadingOverlay } from '@mantine/core';
 
 
 const AddUser = () => {
-   
+  const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState("");
 	const [error, setError] = useState("");
 	const [msg, setMsg] = useState("");
@@ -20,6 +21,7 @@ const AddUser = () => {
   }
 
 	const handleSubmit = async (e) => {
+    setIsLoading(true)
 		e.preventDefault();
 		try {
 			const url = "http://127.0.0.1:8090/user/register";
@@ -27,6 +29,7 @@ const AddUser = () => {
       setError("");
 			setMsg(res.message);
       setEmail("");
+      setIsLoading(false)
 
 		} catch (error) {
 			if (
@@ -36,6 +39,7 @@ const AddUser = () => {
 			) {
         setMsg("");
 				setError(error.response.data.message);
+        setIsLoading(false)
 			}
 		}
 	};
@@ -43,6 +47,7 @@ const AddUser = () => {
     return (
 
       <div className="Auth-form-container">
+         <LoadingOverlay visible={isLoading} overlayBlur={2} />
         <form className="Auth-form" onSubmit={handleSubmit}>
           <div className="Auth-form-content">
             <h3 className="Auth-form-title">Add User</h3>
