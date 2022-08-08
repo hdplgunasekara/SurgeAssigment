@@ -14,6 +14,7 @@ export default function NoteModal(props) {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const [error, setError] = useState("");
  
 
   useEffect(()=>{
@@ -24,19 +25,32 @@ export default function NoteModal(props) {
    
   const handleChangeTitle = (event) => {
     setTitle(event.target.value);  
+    setError("");
   }
   const handleChangeDescription = (event) => {
-    setDescription(event.target.value);  
+    setDescription(event.target.value); 
+    setError("");
   }
   
 
   const noteUpdate = (id) => {
    
     axios.put(`http://127.0.0.1:8090/usernote/update/${id}`,{title:title,description:description})
-        .then((res) => setShow(false),
-        alert("Updated succussful"),
-        
-        ).catch(err => console.log(err))
+        .then((res) => {
+          swal({
+            title: "Success!",
+            text: "Note Updated Successfully",
+            icon: 'success',
+            timer: 2000,
+            button: false,
+          }).then((()=>{
+            setShow(false);
+            window.location.href='/student/notelist'
+          }))
+        }       
+        ).catch((err) => {
+          setError(err.response.data.message);
+        })
         
 };
 
@@ -75,6 +89,10 @@ export default function NoteModal(props) {
     required/>
   </div>
 
+  {error &&
+  <div class="alert alert-danger" role="alert">
+  {error}
+   </div>}
   </Modal.Body>
     <Modal.Footer>
    

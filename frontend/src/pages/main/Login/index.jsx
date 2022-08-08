@@ -4,6 +4,7 @@ import { Link} from "react-router-dom";
 import  "./login.styles.css";
 import axios from "axios";
 import { LoadingOverlay } from '@mantine/core';
+import swal from "sweetalert";
 
 
 const Login = () => {
@@ -36,20 +37,34 @@ const Login = () => {
       localStorage.setItem("permissionlevel", res.permissionlevel);
       
       setIsLoading(false);
-      if(!res.status){
-        window.location = `/completeprofile/${res.id}`;
-      }else{
-      
-      if(res.permissionlevel==='Student'){
+      swal({
+        title: "Success!",
+        text: "Log In Success",
+        icon: 'success',
+        timer: 2000,
+        button: false,
+      }).then(()=>{
+
+
+        if(!res.status){
+          window.location = `/completeprofile/${res.id}`;
+        }else{
         
-        window.location = "student/notelist";
+        if(res.permissionlevel==='Student'){
+          
+          window.location = "student/notelist";
+        }
+  
+        if(res.permissionlevel==='Admin'){
+          
+          window.location = "admin/userlist";
+        }
       }
 
-      if(res.permissionlevel==='Admin'){
-        
-        window.location = "admin/userlist";
-      }
-    }
+      })  
+
+
+      
 
 		} catch (error) {
 			if (
@@ -58,7 +73,13 @@ const Login = () => {
 				error.response.status <= 500
 			) {
         setIsLoading(false);
-				alert(error.response.data.message);
+        swal({
+          title: "Failed!",
+          text: error.response.data.message,
+          icon: 'warning',
+          timer: 2000,
+          button: false,
+        })
 			}
 		}
 	};

@@ -72,6 +72,10 @@ router.route("/update/:id").put(async(req,res)=>{
     let noteId = req.params.id;
     const{title,description}=req.body;
 
+    const { error } = validateNote(req.body);
+    if (error)
+        return res.status(400).send({ message: error.details[0].message });
+
     const updateNote={
         title,
         description

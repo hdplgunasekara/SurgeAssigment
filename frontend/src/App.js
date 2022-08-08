@@ -15,6 +15,7 @@ import PrivateRouteMain from "./Auth/PrivateRouteMain";
 
 
 
+
 function App() {
 
 
@@ -45,6 +46,9 @@ function App() {
           <Route exact path="/completeprofile/:id" element={<CompleteProfile />} />
           </Route>
 
+         {/* 404 page */}
+        <Route path="*" element={<Login />} />
+         
         </Routes>
       </Router>
     </div>
