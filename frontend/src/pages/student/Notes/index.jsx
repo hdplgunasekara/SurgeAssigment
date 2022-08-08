@@ -18,7 +18,7 @@ const Notes = () => {
     const getNotes = async()=>{
     setIsLoading(true);
     const res= await fetch(
-        'http://127.0.0.1:8090/usernote/notes'
+        `http://127.0.0.1:8090/usernote/notes?userid=${localStorage.getItem("id")}`
     );
     setIsLoading(false);
     const data = await res.json();
@@ -36,7 +36,7 @@ const Notes = () => {
     const fetchNotes = async  (currentPage)=>{
         setIsLoading(true);
         const res = await fetch(
-            `http://127.0.0.1:8090/usernote/notes?page=${currentPage}&limit=1`
+            `http://127.0.0.1:8090/usernote/notes?userid=${localStorage.getItem("id")}&page=${currentPage}&limit=1`
         );
         const data = await res.json();
         setIsLoading(false);

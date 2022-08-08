@@ -29,8 +29,8 @@ const AddNote = () => {
 		e.preventDefault();
 		try {
       setIsLoading(true);
-			const url = "http://localhost:8090/usernote/add";
-			const { data: res } = await axios.post(url, {title:title,description:description},requestConfigJson).then(()=>{
+			const url = `http://localhost:8090/usernote/add/${localStorage.getItem("id")}`;
+			const { data: res } = await axios.post(url, {title:title,description:description}).then(()=>{
             alert("Added Successful");      
             window.location.reload();
             setIsLoading(false);
@@ -38,7 +38,7 @@ const AddNote = () => {
             })			
 		} catch (error) {
 			if(error.response){
-			setError("Error! Please Try Again");
+			setError(error.response.data.message);
       setIsLoading(false);
             }
 

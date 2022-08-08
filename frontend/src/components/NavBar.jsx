@@ -14,6 +14,7 @@ console.log(localStorage.getItem("accesstoken") && localStorage.getItem("status"
     localStorage.removeItem("email");
     localStorage.removeItem("id");
     localStorage.removeItem("permissionlevel");
+    localStorage.removeItem("status");
     window.location.href = "/login";
 	};
    
