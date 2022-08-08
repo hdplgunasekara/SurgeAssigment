@@ -62,8 +62,14 @@ const AddUser = () => {
                 required
               />
             </div>
-            {error && <p>{error}</p>}
-            {msg && <p>{msg}</p>}
+            {error &&
+            <div class="alert alert-danger" role="alert">
+            {error}
+          </div>}
+            {msg && 
+            <div class="alert alert-success" role="alert">
+            {msg}
+          </div>}
             <div className="d-grid gap-2 mt-3">
               <button type="submit" className="btn btn-primary">
                 Submit

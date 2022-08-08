@@ -7,6 +7,7 @@ import requestConfigJson from "../../../context/ConfigJson";
 import { LoadingOverlay } from '@mantine/core';
 
 
+
 const AddNote = () => {
 
     const [title, setTitle] = useState("");
@@ -25,17 +26,24 @@ const AddNote = () => {
       }
 
 
-      const handleSubmit = async (e) => {
+    const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
       setIsLoading(true);
 			const url = `http://localhost:8090/usernote/add/${localStorage.getItem("id")}`;
 			const { data: res } = await axios.post(url, {title:title,description:description}).then(()=>{
-            alert("Added Successful");      
-            window.location.reload();
-            setIsLoading(false);
-        
-            })			
+        setIsLoading(false)
+        swal({
+          title: "Success!",
+          text: "Note Added Successfully",
+          icon: 'success',
+          timer: 2000,
+          button: false,
+        }).then(()=>{
+          window.location.href='/student/notelist'
+        })   
+           
+        })			
 		} catch (error) {
 			if(error.response){
 			setError(error.response.data.message);
