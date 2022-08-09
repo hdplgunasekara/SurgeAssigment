@@ -30,7 +30,9 @@ router.post("/register", async (req, res) => {
         }
 
        
-	    const message=`This is your login link /n This is your temporary password-${password}`;
+	    const message=`This is your login link - http://localhost:3000/login
+        This is your temporary password - ${password} 
+        `;
 	    
         await sendEmail(email, "Your Login Link With Password", message)
         
@@ -69,18 +71,21 @@ router.post('/login', async (req,res)=>{
     const email= req.body.email;
     const password = req.body.password;
 
+
    try {
+
     const user = await User.findOne({ email: email });
+
     if (!user)
-        return res.status(401).send({ message: "Invalid Email" });
+        return res.status(400).send({ message: "Invalid Email" });
 
     const validPassword = await bcrypt.compare(
-        req.body.password,
+        password,
         user.password
     );
 
     if (!validPassword)
-        return res.status(401).send({ message: "Incorrect Password " });
+        return res.status(400).send({ message: "Incorrect Password " });
 
 
      const tokendetails= {email:user.email,type:user.accounttype,status:user.status};

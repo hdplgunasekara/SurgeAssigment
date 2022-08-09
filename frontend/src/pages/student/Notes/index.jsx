@@ -54,25 +54,26 @@ const Notes = () => {
         setItems(notesFormServer.data);
     }
 
-    const noteDelete=(id)=>{
-       
-        axios.put(`http://127.0.0.1:8090/usernote/deletenote/${id}`,requestConfigJson).then(res=>{
-        swal({
-            title: "Success!",
-            text: "Note Deleted Successfully",
-            icon: 'warning',
-            timer: 2000,
-            button: false,
-          })
-          .then(function(){
-            window.location.reload();
-          })
-         
-        }
-        ).catch(err=>{
-           alert("Error")
-        });
-        
+    const noteDelete=async(id)=>{
+        try {
+       const url = `http://127.0.0.1:8090/usernote/deletenote/${id}`;
+        await axios.put(url,requestConfigJson).then(res=>{
+            swal({
+                    title: "Success!",
+                    text: "Note Deleted Successfully",
+                    icon: 'warning',
+                    timer: 2000,
+                    button: false,
+                  })
+              .then(function(){
+                window.location.reload();
+              })           
+            } 
+            )
+
+        } catch (error) {
+			alert("Failed")
+		}
       };
    
     return (

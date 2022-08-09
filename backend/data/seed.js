@@ -7,17 +7,17 @@ const URL='mongodb+srv://itp2022:itp2022@cluster0.sqoif.mongodb.net/surgeassigme
 const newUser = new User({              
     firstname:"Pasindu",
     lastname:"Lakshan",
-    email:"pasindu@gmail.com",
+    email:"admin@gmail.com",
     dateofbirth:"2010-10-09",
     mobile:"0773245322",
     status:true,
-    password:"hashPassword",
+    password:"$2b$10$cTO.VoDNCZzV1RpZweds9eg9rIpFXld0CQ.ZcmZnKKSO5Efd3vvgi",
     accounttype:"Admin"
 })
 
 
 const SeedDB = async () =>{
-    await User.deleteMany({});
+
     await User.insertMany(newUser);
 
 }

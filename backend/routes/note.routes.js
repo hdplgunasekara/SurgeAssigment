@@ -3,8 +3,9 @@ const { default: mongoose } = require("mongoose");
 let {Note,validateNote} = require("../models/note");
 const auth = require('../middleware/auth.js');
 
-//add notes start 
 
+//add notes start 
+ 
 router.post("/add/:userid",auth, async (req, res) => {
     const title = req.body.title;
     const description = req.body.description;
@@ -37,10 +38,10 @@ router.post("/add/:userid",auth, async (req, res) => {
 
 //add notes end
 
-
 //fetch notes start (with pagination)
 
-router.get("/notes",auth,async (req, res) => {
+
+router.get("/notes",async (req, res) => {
 
 	try {
 		
@@ -67,6 +68,7 @@ router.get("/notes",auth,async (req, res) => {
 
 //fetch notes end
 
+//update note start
 
 router.route("/update/:id").put(auth,async(req,res)=>{
     let noteId = req.params.id;
@@ -91,8 +93,11 @@ router.route("/update/:id").put(auth,async(req,res)=>{
  
 })
 
+//update note end
 
-router.route("/deletenote/:id").put(auth,async(req,res)=>{
+//delete note start
+
+router.route("/deletenote/:id").put(async(req,res)=>{
     let noteId = req.params.id;
     
 
@@ -110,6 +115,6 @@ router.route("/deletenote/:id").put(auth,async(req,res)=>{
  
 })
 
-
+//delete note end
 
 module.exports = router;
