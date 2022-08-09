@@ -8,6 +8,7 @@ import Notemodal from '../../../components/models/NoteModel'
 import axios from 'axios';
 import swal from 'sweetalert'
 import { LoadingOverlay } from '@mantine/core';
+import requestConfigJson from "../../../context/ConfigJson";
 
 const Notes = () => {
     const [items,setItems]= useState([]);
@@ -18,13 +19,13 @@ const Notes = () => {
     const getNotes = async()=>{
     setIsLoading(true);
     const res= await fetch(
-        `http://127.0.0.1:8090/usernote/notes?userid=${localStorage.getItem("id")}`
+        `http://127.0.0.1:8090/usernote/notes?userid=${localStorage.getItem("id")}`,
+        requestConfigJson
     );
     setIsLoading(false);
     const data = await res.json();
-    setpageCount(10);
-
-    setItems(data);
+    setpageCount(data.count+1);
+    setItems(data.data);
     };
 
     getNotes();
@@ -35,7 +36,8 @@ const Notes = () => {
     const fetchNotes = async  (currentPage)=>{
         setIsLoading(true);
         const res = await fetch(
-            `http://127.0.0.1:8090/usernote/notes?userid=${localStorage.getItem("id")}&page=${currentPage}&limit=1`
+            `http://127.0.0.1:8090/usernote/notes?userid=${localStorage.getItem("id")}&page=${currentPage}&limit=1`,
+            requestConfigJson
         );
         const data = await res.json();
         setIsLoading(false);
@@ -49,12 +51,12 @@ const Notes = () => {
 
         const notesFormServer = await fetchNotes(currentPage);
 
-        setItems(notesFormServer);
+        setItems(notesFormServer.data);
     }
 
     const noteDelete=(id)=>{
        
-        axios.put(`http://127.0.0.1:8090/usernote/deletenote/${id}`).then(res=>{
+        axios.put(`http://127.0.0.1:8090/usernote/deletenote/${id}`,requestConfigJson).then(res=>{
         swal({
             title: "Success!",
             text: "Note Deleted Successfully",

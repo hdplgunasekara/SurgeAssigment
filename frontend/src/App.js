@@ -1,6 +1,6 @@
-import logo from './logo.svg';
+
 import './App.css';
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom"
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import Login from "./pages/main/Login";
 import Logout from "./pages/main/Logout";
 import Notes from "./pages/student/Notes";
@@ -12,8 +12,7 @@ import Nav from "./components/NavBar"
 import PrivateRouteAdmin from "./Auth/PrivateRouteAdmin";
 import PrivateRouteStudent from "./Auth/PrivateRouteStudent";
 import PrivateRouteMain from "./Auth/PrivateRouteMain";
-
-
+import PageNotFound from './pages/main/404Error';
 
 
 function App() {
@@ -47,7 +46,8 @@ function App() {
           </Route>
 
          {/* 404 page */}
-        <Route path="*" element={<Login />} />
+        <Route path="*" element={<PageNotFound/>} />
+        <Route path="/" element={<Login/>} />
          
         </Routes>
       </Router>

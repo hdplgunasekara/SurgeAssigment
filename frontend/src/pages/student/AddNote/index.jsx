@@ -31,7 +31,7 @@ const AddNote = () => {
 		try {
       setIsLoading(true);
 			const url = `http://localhost:8090/usernote/add/${localStorage.getItem("id")}`;
-			const { data: res } = await axios.post(url, {title:title,description:description}).then(()=>{
+		   await axios.post(url, {title:title,description:description}, requestConfigJson).then(()=>{
         setIsLoading(false)
         swal({
           title: "Success!",

@@ -21,7 +21,7 @@ const User = () => {
     setIsLoading(true)
     const getUsers = async()=>{
     const res= await fetch(
-        'http://127.0.0.1:8090/user/users'
+        'http://127.0.0.1:8090/user/users',requestConfigJson
     );
     const data = await res.json();
     setpageCount(10);
@@ -40,6 +40,7 @@ const User = () => {
         setIsLoading(true)
         const res = await fetch(
             `http://127.0.0.1:8090/user/users?page=${currentPage}&limit=1&search=${search}`
+            ,requestConfigJson
         );
         const data = await res.json();
         setIsLoading(false)
@@ -100,9 +101,7 @@ const User = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {items==null && 
-                    <h2>No Result Found</h2>
-                    }
+                  
 
                     {items.map(user => <tr key={user._id}>
 
