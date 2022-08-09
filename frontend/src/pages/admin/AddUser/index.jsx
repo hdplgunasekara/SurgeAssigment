@@ -1,7 +1,6 @@
 import React from "react";
 import { useState } from "react";
 import axios from "axios";
-import { Link} from "react-router-dom";
 import  "./adduser.styles.css";
 import requestConfigJson from "../../../context/ConfigJson";
 import { LoadingOverlay } from '@mantine/core';

@@ -1,10 +1,11 @@
-import React, { useContext } from "react";
+import React from "react";
 import { useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import  "./completep.styles.css";
 import swal from "sweetalert";
 import { LoadingOverlay } from '@mantine/core';
 import axios from "axios";
+import requestConfigJson from "../../../context/ConfigJson";
 
 
 const CompleteProfile = () => {
@@ -32,7 +33,7 @@ const handleChange = ({ currentTarget: input }) => {
 		try {
       setIsLoading(true);
 			const url = `http://localhost:8090/user/completeprofile/${param.id}`;
-			 await axios.put(url, data).then(res=>{
+			 await axios.put(url, data, requestConfigJson).then(res=>{
                 swal({
                     title: "Success!",
                     text: "Profile Completed Successfully, Please Log In",

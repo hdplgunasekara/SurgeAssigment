@@ -6,6 +6,7 @@ const sendEmail = require("../utils/sendmail");
 const jwt =require('jsonwebtoken');
 const bcrypt = require("bcrypt");
 require("dotenv").config();
+const auth = require('../middleware/auth.js');
 
 let refreshTokens=[]; 
 
@@ -126,7 +127,7 @@ router.post('/token',(req,res)=>{
 
 //fetch users start (with pagination)
 
-router.get("/users", async (req, res) => {
+router.get("/users",auth, async (req, res) => {
 
 	try {
 		
@@ -168,7 +169,7 @@ router.get("/users", async (req, res) => {
 
 //profile complete start
 
-router.put("/completeprofile/:id", async (req, res) => {
+router.put("/completeprofile/:id",auth, async (req, res) => {
     const Id = req.params.id
     
 	try {

@@ -5,7 +5,7 @@ const auth = require('../middleware/auth.js');
 
 //add notes start 
 
-router.post("/add/:userid", async (req, res) => {
+router.post("/add/:userid",auth, async (req, res) => {
     const title = req.body.title;
     const description = req.body.description;
     const userid =req.params.userid;
@@ -40,7 +40,7 @@ router.post("/add/:userid", async (req, res) => {
 
 //fetch notes start (with pagination)
 
-router.get("/notes", async (req, res) => {
+router.get("/notes",auth,async (req, res) => {
 
 	try {
 		
@@ -54,10 +54,10 @@ router.get("/notes", async (req, res) => {
         
         const limit = parseInt(size);
         const skip = (page-1)*size;
-
+        const count=  await Note.find({status : 'Active', userid:userid}).count();
         const notes = await Note.find({status : 'Active', userid:userid}).limit(limit).skip(skip);
-       
-        res.send(notes);
+         
+        res.send({data: notes, count: parseInt(count/limit)});
 
 
 	} catch (error) {
@@ -68,7 +68,7 @@ router.get("/notes", async (req, res) => {
 //fetch notes end
 
 
-router.route("/update/:id").put(async(req,res)=>{
+router.route("/update/:id").put(auth,async(req,res)=>{
     let noteId = req.params.id;
     const{title,description}=req.body;
 
@@ -92,7 +92,7 @@ router.route("/update/:id").put(async(req,res)=>{
 })
 
 
-router.route("/deletenote/:id").put(async(req,res)=>{
+router.route("/deletenote/:id").put(auth,async(req,res)=>{
     let noteId = req.params.id;
     
 
