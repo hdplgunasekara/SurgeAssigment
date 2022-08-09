@@ -5,7 +5,7 @@ import { useState,useEffect } from 'react';
 import { Col, Row, Form } from "react-bootstrap";
 import axios from 'axios';
 import swal from 'sweetalert';
-
+import requestConfigJson from "../../context/ConfigJson";
 
 
 export default function NoteModal(props) {
@@ -35,7 +35,7 @@ export default function NoteModal(props) {
 
   const noteUpdate = (id) => {
    
-    axios.put(`http://127.0.0.1:8090/usernote/update/${id}`,{title:title,description:description})
+    axios.put(`http://127.0.0.1:8090/usernote/update/${id}`,{title:title,description:description},requestConfigJson)
         .then((res) => {
           swal({
             title: "Success!",
