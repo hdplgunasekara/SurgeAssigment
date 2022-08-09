@@ -34,37 +34,37 @@ export default function UserModal(props) {
         <Modal.Body>
 
 
- <div class="form-group">
+ <div className="form-group">
     <label for="formGroupExampleInput">First Name</label>
-    <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input"
+    <input type="text" className="form-control" id="formGroupExampleInput" placeholder="Example input"
     value={props.fname}
     readOnly/>
   </div>
 
   <div class="form-group">
     <label for="formGroupExampleInput">Last Name</label>
-    <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input"
+    <input type="text" className="form-control" id="formGroupExampleInput" placeholder="Example input"
     value={props.lname}
     readOnly/>
   </div>
 
-  <div class="form-group">
+  <div className="form-group">
     <label for="formGroupExampleInput">Email</label>
-    <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input"
+    <input type="text" className="form-control" id="formGroupExampleInput" placeholder="Example input"
     value={props.email}
     readOnly/>
   </div>
 
-  <div class="form-group">
+  <div className="form-group">
     <label for="formGroupExampleInput">Date Of Birth</label>
-    <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input"
+    <input type="text" className="form-control" id="formGroupExampleInput" placeholder="Example input"
     value={props.dob}
     readOnly/>
   </div>
  
-  <div class="form-group">
+  <div className="form-group">
     <label for="formGroupExampleInput">Mobile</label>
-    <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input"
+    <input type="text" className="form-control" id="formGroupExampleInput" placeholder="Example input"
     value={props.mobile}
     readOnly/>
   </div>

@@ -33,7 +33,7 @@ describe('User API', () => {
       describe('User enter incorrect password', () => {
         const payload = {
 
-         email:"pasi@gmail.com",
+         email:"admin@gmail.com",
          password:"pasi12344"
           
         }
@@ -55,6 +55,25 @@ describe('User API', () => {
             done()
           })
         })
+      })
+      describe('User Loged in Successfully', () => {
+        const payload = {
+
+         email:"admin@gmail.com",
+         password:"Admin1234"
+          
+        }
+  
+        it('Status', done => {
+          request.post(`${URL}/login`, {
+            json: payload
+          }, (_, response) => {
+            expect(response.statusCode).to.equal(200)
+            done()
+          })
+        })
+  
+      
       })
     })
   })

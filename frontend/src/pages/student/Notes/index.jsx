@@ -46,11 +46,8 @@ const Notes = () => {
     };
 
     const handlePageClick = async (data)=>{
-
         let currentPage = data.selected+1;
-
         const notesFormServer = await fetchNotes(currentPage);
-
         setItems(notesFormServer.data);
     }
 
@@ -85,8 +82,8 @@ const Notes = () => {
         <center><h2>My Notes List</h2></center>
         
         <div className="Notes-container">
-            <table class="table table-striped styled-table ">
-                <thead class="thead-dark" >
+            <table className="table table-striped styled-table ">
+                <thead className="thead-dark" >
                     <tr>
                         
                         <th scope="col">Title</th>

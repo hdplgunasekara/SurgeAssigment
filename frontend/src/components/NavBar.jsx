@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -23,23 +23,20 @@ const Navbar = () => {
     return (
         <div>
 
-<nav class="navbar navbar-expand-sm navbar-dark bg-dark ">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="javascript:void(0)">SURGE ASSIGNMENT</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="mynavbar">
-      <ul class="navbar-nav me-auto">
+<nav className="navbar navbar-expand-sm navbar-dark bg-dark ">
+  <div className="container-fluid">
+    <a className="navbar-brand" href="javascript:void(0)" data-testid="logo-text">SURGE ASSIGNMENT</a>
+    <div className="collapse navbar-collapse" id="mynavbar">
+      <ul className="navbar-nav me-auto">
 
         {/* Admin Menu */}
 					{localStorage.getItem("permissionlevel") === "Admin" && localStorage.getItem("status")==='true'? (
 					<>
-        <li class="nav-item">
-          <a class="nav-link" href="/admin/adduser">Add User</a>
+        <li className="nav-item">
+          <a className="nav-link" href="/admin/adduser">Add User</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/admin/userlist">View User</a>
+        <li className="nav-item">
+          <a className="nav-link" href="/admin/userlist">View User</a>
         </li>
         </>
             					
@@ -50,11 +47,11 @@ const Navbar = () => {
           {/* Student Menu */}
 					{localStorage.getItem("permissionlevel") === "Student" && localStorage.getItem("status")==='true'? (
 					<>
-       <li class="nav-item">
-          <a class="nav-link" href="/student/addnote">Add Note</a>
+       <li className="nav-item">
+          <a className="nav-link" href="/student/addnote">Add Note</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/student/notelist">View Notes</a>
+        <li className="nav-item">
+          <a className="nav-link" href="/student/notelist">View Notes</a>
         </li>
         </>
             					
@@ -66,13 +63,13 @@ const Navbar = () => {
         </ul>
 
         {localStorage.getItem("accesstoken") && localStorage.getItem("status")==='true'? (
-					<form class="d-flex">     
-          <button class="btn btn-primary" type="button" onClick={logout} >Logout</button>
+					<form className="d-flex">     
+          <button className="btn btn-primary" type="button" onClick={logout} >Logout</button>
            </form>
 				) : (
 
-          <form class="d-flex">     
-          <a href='/login' class="btn btn-primary" >Login</a>
+          <form className="d-flex">     
+          <a href='/login' className="btn btn-primary" data-testid="login-btn">Login</a>
           </form>
 					
 				)}

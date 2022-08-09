@@ -2,7 +2,6 @@ import React from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { useState,useEffect } from 'react';
-import { Col, Row, Form } from "react-bootstrap";
 import axios from 'axios';
 import swal from 'sweetalert';
 import requestConfigJson from "../../context/ConfigJson";
@@ -20,7 +19,7 @@ export default function NoteModal(props) {
   useEffect(()=>{
     setTitle(props.title);
     setDescription(props.description);
-    
+  
     },[]);
    
   const handleChangeTitle = (event) => {
@@ -74,23 +73,23 @@ export default function NoteModal(props) {
         <Modal.Body>
 
 
- <div class="form-group">
+ <div className="form-group">
     <label for="formGroupExampleInput">Title</label>
-    <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input"
+    <input type="text" className="form-control" id="formGroupExampleInput" placeholder="Example input"
     onChange={handleChangeTitle}
     value={title}
     required/>
   </div>
-  <div class="form-group">
+  <div className="form-group">
     <label for="formGroupExampleInput2">Description</label>
-    <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input"
+    <input type="text"className="form-control" id="formGroupExampleInput2" placeholder="Another input"
     onChange={handleChangeDescription}
     value={description}
     required/>
   </div>
 
   {error &&
-  <div class="alert alert-danger" role="alert">
+  <div className="alert alert-danger" role="alert">
   {error}
    </div>}
   </Modal.Body>

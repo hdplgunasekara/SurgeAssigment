@@ -24,8 +24,7 @@ const User = () => {
         'http://127.0.0.1:8090/user/users',requestConfigJson
     );
     const data = await res.json();
-    setpageCount(10);
-
+    setpageCount(2);
     setItems(data);
    
     };
@@ -35,8 +34,7 @@ const User = () => {
 
     },[]);
 
-    const fetchUsers = async  (currentPage)=>{
-        
+    const fetchUsers = async  (currentPage)=>{ 
         setIsLoading(true)
         const res = await fetch(
             `http://127.0.0.1:8090/user/users?page=${currentPage}&limit=1&search=${search}`
@@ -45,28 +43,20 @@ const User = () => {
         const data = await res.json();
         setIsLoading(false)
         return data;
-
     };
 
     const handlePageClick = async (data)=>{
-        
-
         let currentPage = data.selected+1;
-
         const userFormServer = await fetchUsers(currentPage);
-
         setItems(userFormServer);
     }
 
     const handleChangeSearch = async (event) => {
         setSearch(event.target.value);  
         const userFormServer = await fetchUsers(1);
-        setItems(userFormServer);
-
-      
+        setItems(userFormServer); 
       }
 
-   
    
     
     return (
@@ -126,7 +116,7 @@ const User = () => {
             </table>
             	
 				) : (
-                    <div class="alert alert-warning" role="alert">
+                    <div className="alert alert-warning" role="alert">
                     No Result Found!!
                     </div>
           				
