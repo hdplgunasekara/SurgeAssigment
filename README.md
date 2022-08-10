@@ -103,10 +103,12 @@ npm test
 ```
 (If it doesn't run go inside the frontend container and type above command)
 
+(I was unable to complete the unit testing part before the deadline because  I'm still learning the unit testing on mern.But I added one unit case for frontend and one for backend with my current knowledge)
+
 If you want to stop running project type 
 
 ```
-docker kill <backend-container-d> <fronted-container-d> <mongodb-container-d>
+docker kill <backend-container-id> <fronted-container-id> <mongodb-container-id>
 ```
 
 
