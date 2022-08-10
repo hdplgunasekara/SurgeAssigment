@@ -2,10 +2,10 @@ const mongoose = require('mongoose');
 let {User} = require('../models/user');
 
 
-const URL='mongodb+srv://itp2022:itp2022@cluster0.sqoif.mongodb.net/surgeassigment_db?retryWrites=true&w=majority';
+const URL='mongodb://mongodb:27017/surgeassigment_db';
 
 const newUser = new User({ 
-    _id:1,             
+    _id:0,             
     firstname:"Pasindu",
     lastname:"Lakshan",
     email:"admin@gmail.com",
