@@ -59,11 +59,6 @@ You can find your backend container id by typing
 docker ps
 ```
 
-If you want exit from docker container type 
-
-```
-exit
-```
 
 Then run npm run seed inside it it will seed one admin to database
 
@@ -73,6 +68,12 @@ npm run seed
 
 Admin email = `admin@gmail.com`
 Admin Password = `Admin1234`
+
+If you want exit from docker container type 
+
+```
+exit
+```
 
 Now you can log in using above admin credentials.
 
