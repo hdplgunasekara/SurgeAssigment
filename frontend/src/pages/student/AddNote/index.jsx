@@ -73,14 +73,14 @@ const AddNote = () => {
             </div>
             <div className="form-group mt-3">
               <label>Note Description</label>
-              <textarea class="form-control mt1" placeholder="Enter description"  rows="4"
+              <textarea className="form-control mt1" placeholder="Enter description"  rows="4"
               onChange={handleChangeDescription}
               required
               ></textarea>
             </div>
             <br/>
             {error &&
-            <div class="alert alert-danger" role="alert">
+            <div className="alert alert-danger" role="alert">
             {error}
             </div>}
             

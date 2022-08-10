@@ -41,11 +41,11 @@ router.post("/register", async (req, res) => {
 
         const newUser = new User({
         
-            firstname:"Undifiend",
-            lastname:"Undifiend",
+            firstname:"incomplete",
+            lastname:"incomplete",
             email:email,
-            dateofbirth:"Undifiend",
-            mobile:"Undifiend",
+            dateofbirth:"incomplete",
+            mobile:"incomplete",
             status:false,
             password:hashPassword,
             accounttype:"Student"
@@ -102,7 +102,7 @@ router.post('/login', async (req,res)=>{
         status:user.status
     };
 
-     res.send(data);
+     res.status(200).send(data)
 
 
    } catch (error) {
@@ -148,13 +148,12 @@ router.get("/users",auth, async (req, res) => {
         const limit = parseInt(size);
         const skip = (page-1)*size;
 
-        if(search==null||search===""){
 
-            const users = await User.find().limit(limit).skip(skip);      
+        if(search==null||search===""){
+            const users = await User.find().limit(limit).skip(skip);   
             res.send(users);
             
         }else{
-            
             const users = await User.find({
             $or: [{ firstname: { $regex: search, $options: "i" }},{lastname: { $regex: search, $options: "i" }},{email: { $regex: search, $options: "i" }}],
             }).limit(limit).skip(skip);      

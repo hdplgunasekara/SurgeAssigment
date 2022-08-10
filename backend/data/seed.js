@@ -4,7 +4,8 @@ let {User} = require('../models/user');
 
 const URL='mongodb+srv://itp2022:itp2022@cluster0.sqoif.mongodb.net/surgeassigment_db?retryWrites=true&w=majority';
 
-const newUser = new User({              
+const newUser = new User({ 
+    _id:1,             
     firstname:"Pasindu",
     lastname:"Lakshan",
     email:"admin@gmail.com",

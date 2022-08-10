@@ -62,11 +62,11 @@ const AddUser = () => {
               />
             </div>
             {error &&
-            <div class="alert alert-danger" role="alert">
+            <div className="alert alert-danger" role="alert">
             {error}
           </div>}
             {msg && 
-            <div class="alert alert-success" role="alert">
+            <div className="alert alert-success" role="alert">
             {msg}
           </div>}
             <div className="d-grid gap-2 mt-3">
