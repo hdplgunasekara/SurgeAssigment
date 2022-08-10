@@ -1,4 +1,4 @@
-# SurgeAssigment
+# SurgeAssignment
 This project developed using MERN Technology 
 
 Click the following link to see UI designs of the application-
