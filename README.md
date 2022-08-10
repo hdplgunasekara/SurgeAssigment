@@ -59,14 +59,20 @@ You can find your backend container id by typing
 docker ps
 ```
 
+If you want exit from docker container type 
+
+```
+exit
+```
+
 Then run npm run seed inside it it will seed one admin to database
 
 ```
 npm run seed
 ```
 
-Admin email = admin@gmail.com
-Admin Password = Admin1234
+Admin email = `admin@gmail.com`
+Admin Password = `Admin1234`
 
 Now you can log in using above admin credentials.
 
@@ -85,4 +91,10 @@ If you want to run frontend unit testing go to frontend folder and type
 npm test
 ```
 (If it doesn't run go inside the frontend container and type above command)
+
+If you want to stop running project type 
+
+```
+docker kill <backend-container-d> <fronted-container-d> <mongodb-container-d>
+```
 
