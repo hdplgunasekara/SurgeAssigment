@@ -4,6 +4,16 @@ This project developed using MERN Technology
 Click the following link to see UI designs of the application-
 https://www.figma.com/file/R7bRDyhY7eAqLo4P41nYN2/pas?node-id=0%3A1
 
+About App - 
+
+Admin can login using right credentials .Frontend and backend validation had been  created for login process.According to the account type admin can see the admin dashboard .
+An admin can add new users and see existing users.If he wants to add a new user he has to enter the email of new user and the email will be validate by both backend and fronted .Afterwards a temporary password will be sent to that particular email address .That temporary password is stored in the database and the status of the new student is mentioned as  'false' .
+Admin can see the users of the system .Only the email will be shown if the user profile is not completed yet.
+    
+Student must login using the email and the temporary password .And it will consider as the first login.Still the status is false.Then the student will redirect to a page where he has to complete the profile.This action is compulsary .And each field is validated by both backend and frontend .If all the details are correct the student will be added as a new user to the system .Afterwards  he can login as a student and he can add notes.Title and the description must be filled to add a new note.Furthermore he can update and delete notes
+
+JWT authentication has been used in both frontend and backend .Frontend routes are protected by account type and JWT token. Backend routes are  protected by JWT token..Users can be searched by first name,last name ,email and Id.Pagination has been  added to both backend and frontend
+
 
 
 This application have docker integrated. Install docker first

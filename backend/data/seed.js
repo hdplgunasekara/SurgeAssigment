@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 let {User} = require('../models/user');
 
 
-const URL='mongodb://mongodb:27017/surgeassigment_db';
+const URL='mongodb://mongodb:27017/surgeassignment_db';
 
 const newUser = new User({ 
     _id:0,             
