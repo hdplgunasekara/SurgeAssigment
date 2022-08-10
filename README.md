@@ -75,6 +75,8 @@ Then run npm run seed inside it it will seed one admin to database
 ```
 npm run seed
 ```
+(Once the seeding is success  dont run the npm run seed code again)
+
 
 Admin email = `admin@gmail.com`
 Admin Password = `Admin1234`
